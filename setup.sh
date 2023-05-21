@@ -8,3 +8,11 @@ bash ./setup_quant.sh
 echo "=== Downloading the WizardLM 7B GPTQ Model from HF ==="
 mkdir -p ./models
 git clone https://huggingface.co/TheBloke/wizardLM-7B-GPTQ ./models/wizardLM-7B-GPTQ
+
+echo "=== Installing Required packages ==="
+pip install langchain==0.0.175 \
+    transformers==4.28.0 \
+    sentence-transformers==2.2.2 \
+    accelerate==0.18.0 \
+    bitsandbytes==0.38.1 \
+    safetensors==0.3.0
