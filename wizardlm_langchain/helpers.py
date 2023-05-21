@@ -1,21 +1,23 @@
 import logging
 from pathlib import Path
+
 import psutil
 import torch
+
 
 # Based on https://github.com/oobabooga/text-generation-webui/blob/main/modules/GPTQ_loader.py
 def find_quantized_model_file(model_name, args):
     if args.checkpoint:
         return Path(args.checkpoint)
 
-    path_to_model = Path(f'{args.model_dir}/{model_name}')
+    path_to_model = Path(f"{args.model_dir}/{model_name}")
     print(f"Path to Model: {path_to_model}")
     pt_path = None
     priority_name_list = [
-        Path(f'{args.model_dir}/{model_name}{hyphen}{args.wbits}bit{group}{ext}')
-        for group in ([f'-{args.groupsize}g', ''] if args.groupsize > 0 else [''])
-        for ext in ['.safetensors', '.pt']
-        for hyphen in ['-', f'/{model_name}-', '/']
+        Path(f"{args.model_dir}/{model_name}{hyphen}{args.wbits}bit{group}{ext}")
+        for group in ([f"-{args.groupsize}g", ""] if args.groupsize > 0 else [""])
+        for ext in [".safetensors", ".pt"]
+        for hyphen in ["-", f"/{model_name}-", "/"]
     ]
     for path in priority_name_list:
         if path.exists():
@@ -31,12 +33,16 @@ def find_quantized_model_file(model_name, args):
 
         if len(found_pts) > 0:
             if len(found_pts) > 1:
-                logging.warning('More than one .pt model has been found. The last one will be selected. It could be wrong.')
+                logging.warning(
+                    "More than one .pt model has been found. The last one will be selected. It could be wrong."
+                )
 
             pt_path = found_pts[-1]
         elif len(found_safetensors) > 0:
             if len(found_pts) > 1:
-                logging.warning('More than one .safetensors model has been found. The last one will be selected. It could be wrong.')
+                logging.warning(
+                    "More than one .safetensors model has been found. The last one will be selected. It could be wrong."
+                )
 
             pt_path = found_safetensors[-1]
 
@@ -66,9 +72,9 @@ def get_available_memory(system_memory_buffer):
 
 def convert_to_bytes(size_str):
     # Check if size_str ends with 'GiB' or 'MiB'
-    if size_str.endswith('GiB'):
+    if size_str.endswith("GiB"):
         size = float(size_str[:-3]) * 1024 * 1024 * 1024
-    elif size_str.endswith('MiB'):
+    elif size_str.endswith("MiB"):
         size = float(size_str[:-3]) * 1024 * 1024
     else:
         raise ValueError("Invalid size format. Expected 'GiB' or 'MiB' suffix.")

@@ -16,3 +16,24 @@ pip install langchain==0.0.175 \
     accelerate==0.18.0 \
     bitsandbytes==0.38.1 \
     safetensors==0.3.0
+
+echo "=== Making GPTQ-for-LLaMa importable ==="
+# Rename GPTQ dir so that it is importable
+if [ -d ".tmp/GPTQ-for-LLaMa" ]; then
+    mv .tmp/GPTQ-for-LLaMa .tmp/gptq_for_llama
+fi
+# Add the init file so that Python treats it as a package
+if [ ! -f ".tmp/gptq_for_llama/__init__.py" ]; then
+    touch .tmp/gptq_for_llama/__init__.py
+fi
+
+# Append the GPTQ directory to the PYTHONPATH
+FULL_PATH=$(readlink -f ".tmp")
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+mkdir -p $CONDA_PREFIX/etc/conda/deactivate.d
+echo "#!/bin/sh" > $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+echo "#!/bin/sh" > $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
+echo export "PYTHONPATH=$FULL_PATH:$PYTHONPATH" >> $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+echo export "PYTHONPATH=$PYTHONPATH:$FULL_PATH" >> $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
+
+echo "DONE"

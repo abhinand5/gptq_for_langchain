@@ -1,7 +1,7 @@
 #!/bin/bash
 mkdir -p .tmp
 if [ ! -d ".tmp/GPTQ-for-LLaMa" ]; then
-    git clone -b cuda https://github.com/oobabooga/GPTQ-for-LLaMa.git .tmp/GPTQ-for-LLaMa
+    git clone -b cuda https://github.com/abhinand5/GPTQ-for-LLaMa.git .tmp/GPTQ-for-LLaMa
 fi
 cd .tmp/GPTQ-for-LLaMa && \
     pip3 install -r requirements.txt && \
