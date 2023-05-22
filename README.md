@@ -12,7 +12,7 @@ Running LLMs locally offers numerous advantages, with privacy being a key factor
 - Ubuntu 22.04 / WSL2 Ubuntu for Windows
 - Nvidia GPU with at least 6GB VRAM 
     - 6GB VRAM is enough for loading 4-bit 7B models
-- Minumum 8 cores of CPU
+- 8 CPU threads
 - 16 GB RAM is recommended
 - Nvidia drivers already installed (`nvidia-smi` command should work)
 - Suffucient disk space for packages, drivers and model files (~30GB, might vary depending on system)
@@ -43,6 +43,10 @@ Install Miniconda by following the instructions from the [official site](https:/
 To check whether conda was set up correctly
 
 `$ conda --version`
+
+Initialize conda on your shell
+
+`$ conda init`
 
 Create a new conda environment, make sure to use the specified Python version because it was tested only on `3.10.9`
 
