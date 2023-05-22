@@ -10,7 +10,8 @@ Running LLMs locally offers numerous advantages, with privacy being a key factor
 ## Prerequisites
 
 - Ubuntu 22.04 / WSL2 Ubuntu for Windows
-- Nvidia GPU with at least 6GB VRAM
+- Nvidia GPU with at least 6GB VRAM 
+    - 6GB VRAM is enough for loading 4-bit 7B models
 - Minumum 8 cores of CPU
 - 16 GB RAM is recommended
 - Nvidia drivers already installed (`nvidia-smi` command should work)
@@ -18,6 +19,12 @@ Running LLMs locally offers numerous advantages, with privacy being a key factor
 - Git LFS
 
 > **Note:** Docker support will be added.
+
+## Tested Models
+The following GPTQ models are supported for now:
+
+- [wizardLM-7B-GPTQ](https://huggingface.co/TheBloke/wizardLM-7B-GPTQ)
+- [WizardLM-7B-uncensored-GPTQ](https://huggingface.co/TheBloke/WizardLM-7B-uncensored-GPTQ)
 
 ## Getting up and running
 
@@ -63,9 +70,21 @@ Exception: Error while deserializing header: HeaderTooLarge
 
 Then it means the model was not downloaded fully so you can try re-downloading it using the `git clone` command found in `setup.py`.
 
+Before running the demo, it is good to deactivate and reactivate the environment when you are setting it up for the first time.
+
 Run the demo:
 
-`python demo.py`
+`$ python demo.py`
+
+Using the `setup.sh` will by default download the [wizardLM-7B-GPTQ](https://huggingface.co/TheBloke/wizardLM-7B-GPTQ) model but if you want to use other models that were tested with this project, you can use the `download_model.sh` script.
+
+```bash
+$ download_model.sh <HUGGING FACE MODEL NAME>
+# Example
+$ ./download_model.sh "TheBloke/WizardLM-7B-uncensored-GPTQ"
+```
+
+> **Note:** If you are unable to download the complete models from HF make sure Git LFS is correctly configured. The command `git lfs install` might sometimes get the job done.
 
 ## Usage
 

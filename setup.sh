@@ -37,3 +37,8 @@ echo export "PYTHONPATH=$FULL_PATH:$PYTHONPATH" >> $CONDA_PREFIX/etc/conda/activ
 echo export "PYTHONPATH=$PYTHONPATH:$FULL_PATH" >> $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
 
 echo "DONE"
+
+echo "=== Re-activating conda environment for the changes to take effect ==="
+ENV_NAME=$(basename $CONDA_PREFIX)
+conda deactivate
+conda activate $ENV_NAME
