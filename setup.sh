@@ -5,9 +5,24 @@ conda install -y -k pytorch[version=2,build=py3.10_cuda11.7*] torchvision torcha
 echo "=== Setting up Quant CUDA package ==="
 bash ./setup_quant.sh
 
-echo "=== Downloading the WizardLM 7B GPTQ Model from HF ==="
+NO_DOWNLOAD=false
+
+# Check if --no-download argument is provided
+for arg in "$@"; do
+  if [[ "$arg" == "--no-download" ]]; then
+    NO_DOWNLOAD=true
+    break
+  fi
+done
+
 mkdir -p ./models
-git clone https://huggingface.co/TheBloke/wizardLM-7B-GPTQ ./models/wizardLM-7B-GPTQ
+
+if [[ "$NO_DOWNLOAD" == true ]]; then
+  echo "=== Skipping WizardLM 7B GPTQ download ==="
+else
+  echo "=== Downloading the WizardLM 7B GPTQ Model from HF ==="
+  git clone https://huggingface.co/TheBloke/wizardLM-7B-GPTQ ./models/wizardLM-7B-GPTQ
+fi
 
 echo "=== Installing Required packages ==="
 pip install langchain==0.0.175 \
@@ -38,7 +53,7 @@ echo export "PYTHONPATH=$PYTHONPATH:$FULL_PATH" >> $CONDA_PREFIX/etc/conda/deact
 
 echo "DONE"
 
-echo "=== Re-activating conda environment for the changes to take effect ==="
-ENV_NAME=$(basename $CONDA_PREFIX)
-conda deactivate
-conda activate $ENV_NAME
+# echo "=== Re-activating conda environment for the changes to take effect ==="
+# ENV_NAME=$(basename $CONDA_PREFIX)
+# conda deactivate
+# conda activate $ENV_NAME
