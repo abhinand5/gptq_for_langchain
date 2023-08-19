@@ -5,8 +5,6 @@ This repository provides a potential framework with practical examples for devel
 
 Running LLMs locally offers numerous advantages, with privacy being a key factor. By keeping your data within your own hardware, you can leverage the capabilities of these models without relying on external APIs, ensuring greater control over your data and enabling the development of exciting applications.
 
-> **Note:** This repository will be accompanied by a 2-part blog post soon.
-
 ## Prerequisites
 
 - Ubuntu 22.04 / WSL2 Ubuntu for Windows
